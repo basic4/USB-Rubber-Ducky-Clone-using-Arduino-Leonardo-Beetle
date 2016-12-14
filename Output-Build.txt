@@ -1,3 +1,0 @@
-﻿1>------ Rebuild All started: Project: DuckyEncoder, Configuration: Debug Any CPU ------
-1>  DuckyEncoder -> C:\Users\John\documents\visual studio 2013\Projects\DuckyEncoder\DuckyEncoder\bin\Debug\DuckyEncoder.exe
-========== Rebuild All: 1 succeeded, 0 failed, 0 skipped ==========
