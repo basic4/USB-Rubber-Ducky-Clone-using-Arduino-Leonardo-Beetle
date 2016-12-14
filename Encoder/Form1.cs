@@ -18,7 +18,7 @@ namespace DuckyEncoder
 
         String ScriptToExecute = "";
         BinaryWriter dataStreamWriter;
-        String mapType = "UK";
+        String mapType = "US";
 
         #region "Command Processing"
 
