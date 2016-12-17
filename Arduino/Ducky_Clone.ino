@@ -3,17 +3,21 @@
 #include <Wire.h>
 #include <SPI.h>
 //  *********************************************
-//  **  BASIC RUBBER DUCKY CLONE   v1.0        **
+//  **  BASIC RUBBER DUCKY CLONE   v1.1        **
 //  *********************************************
 //  **    basic4@privatoria.net   Sep. 2015    **
 //  **                                         **
 //  **    Requires the encodering App to work  **
 //  **    correctly.                           **
 //  *********************************************
+//  **  Dec 2016 - Added Support for altering  **
+//  **  key press delay time (0xFA) command.   **
+//  *********************************************
 String filename = "script.bin";
 int multi = 0;
 int kill = 0;
 int status = 0;
+int Key_On_Delay = 20; //default 20msec keypress delay
 String result = "READY";
 void sendKeyByte(int inpx)
 {
@@ -39,14 +43,14 @@ void sendKeyByte(int inpx)
                    //End of a multi-key command
                    multi = 0;
                    Keyboard.releaseAll();
-                   delay(5);
+                   delay(10);
                    break;
                default:
                     if(multi == 0)
                     { 
                        //Normal Single character code
                        Keyboard.write(inpx);
-                       delay(20);
+                       delay(Key_On_Delay);
                     }
                     else
                     {
@@ -84,6 +88,22 @@ String readFile(String filename)
         byte x = thisOne.read();
         if (x > -1)
         {
+          if (x == 0xFA)
+          {
+            //set the key press delay time for normal
+            //characters in a STRING or COMD command
+             byte a = thisOne.read();
+             int k = (int)a;
+             if(k > 250 || k < 5)
+             {
+                Key_On_Delay = 20;
+             }
+             else
+             {
+                Key_On_Delay = k;
+             }
+            
+          }
           if (x == 0xFF)
           {
             //delay command - read next 2 bytes
