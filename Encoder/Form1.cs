@@ -98,6 +98,20 @@ namespace DuckyEncoder
                 mapType = typx;
                 return;
             }
+            else if (comline.StartsWith("WAITKEY"))
+            {
+                //Alter default key 'down' time in msecs
+                 String typx = comline.Substring(7);
+                 typx = typx.Replace(" ", "");
+                 typx = typx.Replace(System.Environment.NewLine, "");
+                 int del = Convert.ToInt32(typx);
+                 if(del > 4 && del < 251)
+                 {
+                     sendData(250 & 0xff);
+                     sendData(del & 0xff);
+                     return;
+                 }
+            }
             else
             {
                 //Compound Command or Special Key
