@@ -3,3 +3,5 @@ This project realises a basic version of the 'H4K5' USB Rubber Ducky for under $
 A simple Windows application (written in C# - source included) is used to convert a command script text file into the 'script.bin' executed on duck. The scripting language is almost 100% compatible with the 'H4K5' devices at $50.
 Read the 'Instuctions' pdf document for full build and construction details.
 
+Note: If you want to 'hide' the fact that the ducky clone is an Ardunio, its possible to make changes to some of the Arduino setup files (boards.txt and USBDescriptor.h) such that the USB VID & PID codes can be altered to make the device look like a standard keyboard only from any manufacturer you wish.)
+
