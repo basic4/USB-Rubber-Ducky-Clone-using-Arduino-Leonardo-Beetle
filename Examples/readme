@@ -1,1 +1,6 @@
 Here are a number of script examples.
+
+The textSheel example is a fully working TCP Reverse Shell implemented using microsoft Powershell code. 
+The script actually 'writes' the powershell script, saves it to a file, and then excutes the script. It also sets-up a scheduled job
+to execute the script after each reboot of the target machine. The shell will then form a command connection back to the attacker IP 
+each time the target starts up.
