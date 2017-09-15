@@ -1,0 +1,7 @@
+MAP UK
+DELAY 4000
+GUI
+DELAY 100
+STRING iexplore.exe http://www.bbc.co.uk/news
+DELAY 50
+ENTER
